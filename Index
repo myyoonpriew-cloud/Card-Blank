@@ -1,278 +1,291 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compliance Bingo 4x4</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compliance Bingo 4x4</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(
-        135deg,
-        #0b041e 0%,
-        #140b34 40%,
-        #1d1145 70%,
-        #3b1c75 100%
-    );
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    position: relative;
-    overflow-x: hidden;
-}
-
-h1 {
-    color: #f57c00; 
-    font-size: 54px;
-    font-weight: 900;
-    text-shadow: 3px 3px 0px #ffffff, 6px 6px 0px #1d1145, 0px 10px 20px rgba(0,0,0,0.6);
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: center;
-    letter-spacing: 2px;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    background: #f57c00;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-button:hover {
-    background: #ff9800;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-}
-
-table {
-    border-collapse: separate;
-    border-spacing: 10px;
-    width: auto;
-    max-width: 100%;
-}
-
-td {
-    width: 150px;
-    height: 150px;
-    background: #ffffff;
-    border-radius: 16px;
-    border: 4px solid #f57c00; 
-    text-align: center;
-    vertical-align: middle;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 18px;
-    color: #1d1145;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-    white-space: normal;
-    word-break: break-word; 
-}
-
-td:hover {
-    transform: scale(1.04);
-    box-shadow: 0 10px 20px rgba(245, 124, 0, 0.3);
-}
-
-td.marked {
-    background: linear-gradient(
-        135deg,
-        #1d1145,
-        #3b1c75
-    );
-    color: #ffffff;
-    border-color: #ffffff;
-}
-
-#bingoMessage {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    background: rgba(29, 17, 69, 0.9); 
-    padding: 40px 0;
-    font-size: 72px;
-    font-weight: 900;
-    color: #fbbf24;
-    text-align: center;
-    text-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 4px 4px 0px #f57c00;
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    display: none;
-    z-index: 9999;
-    pointer-events: none; 
-    white-space: nowrap;
-}
-
-@media (max-width: 768px) {
-    table {
-        border-spacing: 6px; 
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0b041e 0%, #140b34 40%, #1d1145 70%, #3b1c75 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      color: #fff;
     }
+
+    h1 {
+      color: #f57c00;
+      font-size: 54px;
+      font-weight: 900;
+      text-shadow: 3px 3px 0 #ffffff, 6px 6px 0 #1d1145, 0 10px 20px rgba(0,0,0,0.6);
+      margin-top: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #f57c00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      background: #ff9800;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 10px;
+      width: auto;
+      max-width: 100%;
+    }
+
     td {
-        width: 21vw; 
+      width: 150px;
+      height: 150px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 4px solid #f57c00;
+      text-align: center;
+      vertical-align: middle;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 28px;
+      color: #1d1145;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    td:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 20px rgba(245, 124, 0, 0.3);
+    }
+
+    td.marked {
+      background: linear-gradient(135deg, #1d1145, #3b1c75);
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    #bingoMessage {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      background: rgba(29, 17, 69, 0.9);
+      padding: 40px 0;
+      font-size: 72px;
+      font-weight: 900;
+      color: #fbbf24;
+      text-align: center;
+      text-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 4px 4px 0 #f57c00;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      display: none;
+      z-index: 9999;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .hint {
+      margin-top: 16px;
+      color: #d1d5db;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      table { border-spacing: 6px; }
+
+      td {
+        width: 21vw;
         height: 21vw;
         max-width: 100px;
         max-height: 100px;
-        font-size: 13px;
+        font-size: 20px;
         border-width: 3px;
         padding: 4px;
-    }
-    h1 {
+      }
+
+      h1 {
         font-size: 36px;
-        text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #1d1145;
+        text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 #1d1145;
         margin-top: 20px;
-    }
-    #bingoMessage {
+      }
+
+      #bingoMessage {
         font-size: 48px;
         padding: 25px 0;
+      }
     }
-}
-</style>
+  </style>
 </head>
-
 <body>
+  <h1>COMPLIANCE BINGO</h1>
 
-<h1>COMPLIANCE BINGO</h1>
+  <div class="controls">
+    <button id="newGameBtn" type="button">🔄 เล่นใหม่</button>
+    <button id="clearBtn" type="button">🧹 ล้างการเลือก</button>
+  </div>
 
-<div class="controls">
-    <button onclick="createBingo()">🔄 เล่นใหม่</button>
-</div>
+  <table id="bingoTable"></table>
+  <div id="bingoMessage">🎉 BINGO! 🎉</div>
 
-<table id="bingoTable"></table>
+  <p class="hint">
+    เปลี่ยนคำศัพท์ได้ที่ตัวแปร <code>wordList</code><br />
+    ตอนนี้ตั้งค่าเป็นเลข <code>"1" ถึง "50"</code> ให้เหมือน Compliance-Blank
+  </p>
 
-<div id="bingoMessage">🎉 BINGO! 🎉</div>
+  <script>
+    // ✅ ตอนนี้ใช้เลข 1-50 ก่อน (เหมือน Compliance-Blank)
+    // ภายหลังคุณสามารถเปลี่ยนเป็นคำศัพท์จริงได้ที่นี่
+    const wordList = Array.from({ length: 50 }, (_, i) => String(i + 1));
 
-<script>
+    const GRID_SIZE = 4;
+    const PICK_COUNT = GRID_SIZE * GRID_SIZE;
 
-const words = ["Accountability","Authenticity","Commitment","Empathy","Ethical","Fair","Honest","Integrity","Principle","Reliable","Respect","Sincere","Transparency","Trustworthy","มีคุณธรรม","สำเร็จ"];
+    const tableEl = document.getElementById("bingoTable");
+    const bingoMessageEl = document.getElementById("bingoMessage");
+    const newGameBtn = document.getElementById("newGameBtn");
+    const clearBtn = document.getElementById("clearBtn");
 
-function createBingo() {
-
-    const table = document.getElementById('bingoTable');
-    table.innerHTML = '';
-
-    document.getElementById('bingoMessage').style.display = 'none';
-
-    const shuffled = [...words]
-        .sort(() => Math.random() - 0.5)
-        .slice(0,16);
-
-    for(let i = 0; i < 4; i++) {
-
-        const row = table.insertRow();
-
-        for(let j = 0; j < 4; j++) {
-
-            const cell = row.insertCell();
-
-            cell.innerHTML = shuffled[i * 4 + j];
-
-            cell.addEventListener('click', function() {
-                this.classList.toggle('marked');
-                checkBingo();
-            });
-
-        }
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
     }
-}
 
-function checkBingo() {
+    function createBingo() {
+      tableEl.innerHTML = "";
+      bingoMessageEl.style.display = "none";
 
-    const table = document.getElementById('bingoTable');
-    const size = 4;
+      if (!Array.isArray(wordList) || wordList.length < PICK_COUNT) {
+        alert(`ต้องมีคำอย่างน้อย ${PICK_COUNT} รายการ`);
+        return;
+      }
 
-    let bingo = false;
+      const selected = shuffle(wordList).slice(0, PICK_COUNT);
 
-    // แถว
-    for(let i = 0; i < size; i++) {
+      for (let r = 0; r < GRID_SIZE; r++) {
+        const row = tableEl.insertRow();
 
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const cell = row.insertCell();
+          cell.textContent = selected[r * GRID_SIZE + c];
+
+          cell.addEventListener("click", () => {
+            cell.classList.toggle("marked");
+            checkBingo();
+          });
+        }
+      }
+    }
+
+    function clearMarks() {
+      for (let r = 0; r < tableEl.rows.length; r++) {
+        for (let c = 0; c < tableEl.rows[r].cells.length; c++) {
+          tableEl.rows[r].cells[c].classList.remove("marked");
+        }
+      }
+      bingoMessageEl.style.display = "none";
+    }
+
+    function checkBingo() {
+      const size = GRID_SIZE;
+      let bingo = false;
+
+      // rows
+      for (let r = 0; r < size; r++) {
         let complete = true;
-
-        for(let j = 0; j < size; j++) {
-
-            if(!table.rows[i].cells[j].classList.contains('marked')) {
-                complete = false;
-            }
-
+        for (let c = 0; c < size; c++) {
+          if (!tableEl.rows[r].cells[c].classList.contains("marked")) {
+            complete = false;
+            break;
+          }
         }
+        if (complete) bingo = true;
+      }
 
-        if(complete) bingo = true;
-    }
-
-    // คอลัมน์
-    for(let j = 0; j < size; j++) {
-
+      // columns
+      for (let c = 0; c < size; c++) {
         let complete = true;
-
-        for(let i = 0; i < size; i++) {
-
-            if(!table.rows[i].cells[j].classList.contains('marked')) {
-                complete = false;
-            }
-
+        for (let r = 0; r < size; r++) {
+          if (!tableEl.rows[r].cells[c].classList.contains("marked")) {
+            complete = false;
+            break;
+          }
         }
+        if (complete) bingo = true;
+      }
 
-        if(complete) bingo = true;
+      // diagonal \
+      let diagonal1 = true;
+      for (let i = 0; i < size; i++) {
+        if (!tableEl.rows[i].cells[i].classList.contains("marked")) {
+          diagonal1 = false;
+          break;
+        }
+      }
+      if (diagonal1) bingo = true;
+
+      // diagonal /
+      let diagonal2 = true;
+      for (let i = 0; i < size; i++) {
+        if (!tableEl.rows[i].cells[size - 1 - i].classList.contains("marked")) {
+          diagonal2 = false;
+          break;
+        }
+      }
+      if (diagonal2) bingo = true;
+
+      bingoMessageEl.style.display = bingo ? "block" : "none";
     }
 
-    // ทแยงหลัก
-    let diagonal1 = true;
+    newGameBtn.addEventListener("click", createBingo);
+    clearBtn.addEventListener("click", clearMarks);
 
-    for(let i = 0; i < size; i++) {
-
-        if(!table.rows[i].cells[i].classList.contains('marked')) {
-            diagonal1 = false;
-        }
-
-    }
-
-    if(diagonal1) bingo = true;
-
-    // ทแยงรอง
-    let diagonal2 = true;
-
-    for(let i = 0; i < size; i++) {
-
-        if(!table.rows[i].cells[size - 1 - i].classList.contains('marked')) {
-            diagonal2 = false;
-        }
-
-    }
-
-    if(diagonal2) bingo = true;
-
-    document.getElementById('bingoMessage').style.display =
-        bingo ? 'block' : 'none';
-}
-
-createBingo();
-
-</script>
-
+    createBingo();
+  </script>
 </body>
 </html>

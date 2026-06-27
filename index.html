@@ -68,23 +68,19 @@
     }
 
     td {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: auto;
+      min-height: 120px;
       background: #ffffff;
       border-radius: 16px;
       border: 4px solid #f57c00;
       text-align: center;
       vertical-align: middle;
-      padding: 10px;
-      font-weight: bold;
-      font-size: 28px;
-      color: #1d1145;
+      padding: 12px 10px;
       cursor: pointer;
       transition: all 0.2s ease;
       user-select: none;
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-      white-space: normal;
-      word-break: break-word;
     }
 
     td:hover {
@@ -94,8 +90,31 @@
 
     td.marked {
       background: linear-gradient(135deg, #1d1145, #3b1c75);
-      color: #ffffff;
       border-color: #ffffff;
+    }
+
+    td.marked .word-th { color: #fbbf24; }
+    td.marked .word-en { color: #d1b3ff; }
+
+    .word-th {
+      display: block;
+      font-size: 20px;
+      font-weight: 900;
+      color: #1d1145;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .word-en {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #5a3e9e;
+      line-height: 1.3;
+      white-space: normal;
+      word-break: break-word;
     }
 
     #bingoMessage {
@@ -136,13 +155,19 @@
       table { border-spacing: 6px; }
 
       td {
-        width: 21vw;
-        height: 21vw;
-        max-width: 100px;
-        max-height: 100px;
-        font-size: 20px;
+        width: 22vw;
+        min-height: 22vw;
+        padding: 8px 4px;
         border-width: 3px;
-        padding: 4px;
+      }
+
+      .word-th {
+        font-size: 13px;
+        margin-bottom: 3px;
+      }
+
+      .word-en {
+        font-size: 10px;
       }
 
       h1 {
@@ -171,12 +196,10 @@
 
   <p class="hint">
     เปลี่ยนคำศัพท์ได้ที่ตัวแปร <code>wordList</code><br />
-    ตอนนี้ตั้งค่าเป็นเลข <code>"1" ถึง "50"</code> ให้เหมือน Compliance-Blank
+    รูปแบบ: <code>"คำภาษาอังกฤษ - คำภาษาไทย"</code>
   </p>
 
   <script>
-    // ✅ ตอนนี้ใช้เลข 1-50 ก่อน (เหมือน Compliance-Blank)
-    // ภายหลังคุณสามารถเปลี่ยนเป็นคำศัพท์จริงได้ที่นี่
     const wordList = [
         "Accountability - ความรับผิดชอบ",
         "Authenticity - ความแท้จริง",
@@ -247,6 +270,18 @@
       return arr;
     }
 
+    // แยก "English - ไทย" ออกเป็น 2 ส่วน
+    function splitWord(text) {
+      const dashIndex = text.indexOf(" - ");
+      if (dashIndex !== -1) {
+        return {
+          en: text.substring(0, dashIndex).trim(),
+          th: text.substring(dashIndex + 3).trim()
+        };
+      }
+      return { en: text, th: "" };
+    }
+
     function createBingo() {
       tableEl.innerHTML = "";
       bingoMessageEl.style.display = "none";
@@ -263,7 +298,20 @@
 
         for (let c = 0; c < GRID_SIZE; c++) {
           const cell = row.insertCell();
-          cell.textContent = selected[r * GRID_SIZE + c];
+          const { en, th } = splitWord(selected[r * GRID_SIZE + c]);
+
+          // บรรทัดบน = ไทย
+          const thSpan = document.createElement("span");
+          thSpan.className = "word-th";
+          thSpan.textContent = th;
+
+          // บรรทัดล่าง = อังกฤษ
+          const enSpan = document.createElement("span");
+          enSpan.className = "word-en";
+          enSpan.textContent = en;
+
+          cell.appendChild(thSpan);
+          cell.appendChild(enSpan);
 
           cell.addEventListener("click", () => {
             cell.classList.toggle("marked");
